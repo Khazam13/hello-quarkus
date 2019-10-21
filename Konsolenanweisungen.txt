@@ -1,0 +1,107 @@
+// Projekt mit Maven anlegen
+mvn io.quarkus:quarkus-maven-plugin:0.23.2:create     -DprojectGroupId=com.cpu_ag     -DprojectArtifactId=hello-quarkus     -DclassName="com.cpu_ag.QuarkusEndpoint"     -Dpath="/hello"
+mvn io.quarkus:quarkus-maven-plugin:0.23.2:create
+     -DprojectGroupId=com.cpu_ag
+     -DprojectArtifactId=hello-quarkus
+     -DclassName="com.cpu_ag.QuarkusEndpoint"
+     -Dpath="/hello"
+
+//Maven build
+mvn clean compile quarkus:dev
+
+// CURL command to add saome data to the person list
+//seems there is some Windows cmd problem with excaping the "Quotes" 
+curl -d '{"name":"john", "surname":"black"}' -H "Content-Type: application/json" -X POST http://127.0.0.1:8080/persons
+curl -d "{\"name\":\"john\", \"surname\":\"black\"}" -H "Content-Type: application/json" -X POST http://127.0.0.1:8080/persons
+
+// Maven native build 
+mvn verify -Pnative
+
+
+oc patch bc/hello-quarkus --patch 
+{
+	"spec":
+	{
+		"strategy":
+		{
+			"dockerStrategy":
+			{
+				"dockerfilePath":"src/main/docker/Dockerfile.native"
+			}
+		}
+	}
+}
+\''
+
+
+In Zeile:1 Zeichen:45
++ oc patch bc/hello-quarkus --patch '\'{"spec":{"strategy":{"dockerStra ...
++                                             ~
+Unerwartetes Token ":" in Ausdruck oder Anweisung.
+In Zeile:1 Zeichen:57
++ oc patch bc/hello-quarkus --patch '\'{"spec":{"strategy":{"dockerStra ...
++                                                         ~
+Unerwartetes Token ":" in Ausdruck oder Anweisung.
+In Zeile:1 Zeichen:75
++ ... llo-quarkus --patch '\'{"spec":{"strategy":{"dockerStrategy":{"docker ...
++                                                                 ~
+Unerwartetes Token ":" in Ausdruck oder Anweisung.
+In Zeile:1 Zeichen:93
++ ... trategy":{"dockerfilePath":"src/main/docker/Dockerfile.native"}}}}\''
++                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unerwartetes Token ":"src/main/docker/Dockerfile.native"" in Ausdruck oder Anweisung.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+	
+	
+	
+In Zeile:1 Zeichen:45
++ oc patch bc/hello-quarkus --patch '\'{"spec":{"strategy":{"dockerStra ...
++                                             ~
+Unerwartetes Token ":" in Ausdruck oder Anweisung.
+In Zeile:1 Zeichen:57
++ oc patch bc/hello-quarkus --patch '\'{"spec":{"strategy":{"dockerStra ...
++                                                         ~
+Unerwartetes Token ":" in Ausdruck oder Anweisung.
+In Zeile:1 Zeichen:75
++ ... llo-quarkus --patch '\'{"spec":{"strategy":{"dockerStrategy":{"docker ...
++                                                                 ~
+Unerwartetes Token ":" in Ausdruck oder Anweisung.
+In Zeile:1 Zeichen:93
++ ... trategy":{"dockerfilePath":"src/main/docker/Dockerfile.native"}}}}\''
++                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unerwartetes Token ":"src/main/docker/Dockerfile.native"" in Ausdruck oder Anweisung.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+	
+	
+In Zeile:2 Zeichen:9
++ '{"spec":{"strategy":{"dockerStrategy":{"dockerfilePath":"src/main/do ...
++         ~
+Unerwartetes Token ":" in Ausdruck oder Anweisung.
+In Zeile:2 Zeichen:21
++ '{"spec":{"strategy":{"dockerStrategy":{"dockerfilePath":"src/main/do ...
++                     ~
+Unerwartetes Token ":" in Ausdruck oder Anweisung.
+In Zeile:2 Zeichen:39
++ '{"spec":{"strategy":{"dockerStrategy":{"dockerfilePath":"src/main/do ...
++                                       ~
+Unerwartetes Token ":" in Ausdruck oder Anweisung.
+In Zeile:2 Zeichen:57
++ ... rStrategy":{"dockerfilePath":"src/main/docker/Dockerfile.native"}}}}'
++                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unerwartetes Token ":"src/main/docker/Dockerfile.native"" in Ausdruck oder Anweisung.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+	
+
+In Zeile:1 Zeichen:6
++ oc @'patch bc/hello-quarkus -p '{"spec":{"strategy":{"dockerStrategy" ...
++      ~
+Nach einem here-string-Header und vor dem Zeilenende sind keine Zeichen zulässig.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedCharactersAfterHereStringHeader
+	
+oc patch bc/hello-quarkus -p @'
+{"spec":{"strategy":{"dockerStrategy":{"dockerfilePath":"src/main/docker/Dockerfile.native"}}}}
+'@
